@@ -1,6 +1,7 @@
 new Vue({
-    el: '#app',
+    el: '#app',  //畫面上榜定的id
     data: {
+        //預設假資料
         products: [
             {
                 id: 112233445,
@@ -40,15 +41,16 @@ new Vue({
                 price: 3500,
                 unit: 'pcs'
             }],
-        tempProduct: {},
+        tempProduct: {}, //作為新增、刪除或修改用的暫時物件
     },
     methods: {
+        //更新資料的方法,包含上傳與新增
         updateProduct() {
             if (this.tempProduct.id) {
                 const id = this.tempProduct.id;
                 this.products.forEach((item, i) => {
                     if (item.id === id) {
-                        this.products[i] = this.tempProduct;
+                        this.products[i] = this.tempProduct;  //直接取代原來的物件
                     }
                 });
             }
@@ -62,14 +64,15 @@ new Vue({
             $('#exampleModal').modal('hide');
 
         },
+        //開啟modal，新增、刪除或修改都是call這個方法
         openModal(type, item) {
             switch (type) {
                 case 'new':
                     this.tempProduct = {};
-                    $('#exampleModal').modal('show');
+                    $('#exampleModal').modal('show'); //開啟modal方法
                     break;
                 case 'edit':
-                    this.tempProduct = Object.assign({}, item);
+                    this.tempProduct = Object.assign({}, item); //深複製，物件複製給tempProduct
                     $('#exampleModal').modal('show');
                     break;
                 case 'delete':
@@ -80,6 +83,7 @@ new Vue({
                     break;
             }
         },
+        //刪除確認方法
         DeleteConfirm(e) {
             const id = this.tempProduct.id;
             this.products.forEach((item, i) => {
@@ -88,7 +92,7 @@ new Vue({
                     this.tempProduct = {};
                 }
             });
-            $('#DeleteModal').modal('hide');
+            $('#DeleteModal').modal('hide'); //關閉modal方法
         },
 
     }
